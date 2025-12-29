@@ -1,0 +1,51 @@
+/* css/style.css */
+
+body {
+    background-color: #f4f6f9; /* Light Grey Background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.public-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+.card-header {
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    padding: 1.2rem;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #198754; /* Success Green */
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+/* Custom Logic Sections */
+#customPurposeDiv, #studentProofSection {
+    transition: all 0.3s ease;
+}
+
+.btn-submit {
+    font-size: 1.1rem;
+    padding: 12px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
