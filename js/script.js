@@ -1,5 +1,7 @@
 // js/script.js
 
+// CONFIGURATION:
+// This points to your local backend via Ngrok
 const API_BASE_URL = "https://genoveva-unratable-shaniqua.ngrok-free.dev";
 
 const eventSelect = document.getElementById('eventSelect');
@@ -13,7 +15,14 @@ const form = document.getElementById('visitorForm');
 // --- STEP 1: FETCH EVENTS ON LOAD ---
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/events`);
+        // --- CHANGED HERE: Added headers to skip Ngrok warning ---
+        const response = await fetch(`${API_BASE_URL}/api/events`, {
+            headers: {
+                "ngrok-skip-browser-warning": "true"
+            }
+        });
+        // ---------------------------------------------------------
+
         const events = await response.json();
 
         // Clear "Loading..."
@@ -101,10 +110,15 @@ form.addEventListener('submit', async (e) => {
     formData.append('visit_type', selectedOption.dataset.type);
 
     try {
+        // --- CHANGED HERE: Added headers to skip Ngrok warning ---
         const response = await fetch(`${API_BASE_URL}/api/visitor/register`, {
             method: 'POST',
+            headers: {
+                "ngrok-skip-browser-warning": "true"
+            },
             body: formData 
         });
+        // ---------------------------------------------------------
 
         const result = await response.json();
         
