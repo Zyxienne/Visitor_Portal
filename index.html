@@ -9,6 +9,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Smooth transition for hiding/showing fields */
+        .collapse-section {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
 </head>
 <body>
 
@@ -20,81 +26,96 @@
         </div>
     </nav>
 
-    <div class="container public-container">
+    <div class="container public-container my-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0"><i class="fas fa-car me-2"></i>Visitor Registration</h4>
+                <div class="card shadow border-0 rounded-3">
+                    <div class="card-header bg-success text-white p-3">
+                        <h4 class="mb-0"><i class="fas fa-user-check me-2"></i>Visitor Registration</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         
                         <form id="visitorForm" enctype="multipart/form-data">
                             
-                            <h5 class="text-muted border-bottom pb-2">Visit Details</h5>
+                            <h5 class="text-success border-bottom pb-2 mb-3">Visit Details</h5>
                             
                             <div class="mb-3">
-                                <label>Purpose of Visit / Event:</label>
+                                <label class="fw-bold">Purpose of Visit / Event:</label>
                                 <select class="form-select" name="event_select" id="eventSelect" required>
                                     <option value="" disabled selected>Loading events...</option>
-                                </select>
+                                    </select>
                             </div>
 
                             <div class="mb-3" id="customPurposeDiv" style="display: none;">
-                                <label>Please specify your purpose:</label>
+                                <label class="fw-bold">Please specify your purpose:</label>
                                 <input type="text" name="custom_purpose" id="customPurposeInput" class="form-control" placeholder="e.g. Registrar transaction, Delivery, Meeting">
                             </div>
 
                             <div class="mb-3">
-                                <label>Date of Visit:</label>
+                                <label class="fw-bold">Date of Visit:</label>
                                 <input type="date" name="visit_date" id="visitDate" class="form-control bg-light" readonly required>
                             </div>
 
-                            <h5 class="text-muted border-bottom pb-2 mt-4">Visitor Details</h5>
+                            <h5 class="text-success border-bottom pb-2 mt-4 mb-3">Visitor Details</h5>
+                            
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label>Full Name</label>
-                                    <input type="text" name="name" class="form-control" required>
+                                    <label class="fw-bold">Full Name</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Juan Dela Cruz" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label>Contact Number</label>
-                                    <input type="text" name="contact" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Vehicle Model</label>
-                                    <input type="text" name="model" class="form-control" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Plate Number</label>
-                                    <input type="text" name="plate" class="form-control" required>
+                                    <label class="fw-bold">Contact Number</label>
+                                    <input type="text" name="contact" class="form-control" placeholder="0912 345 6789" required>
                                 </div>
                             </div>
 
-                            <h5 class="text-muted border-bottom pb-2 mt-4">Security Uploads</h5>
-                            <div class="mb-3">
-                                <label class="form-label">Photo of Vehicle</label>
-                                <input type="file" name="photo_vehicle" class="form-control" accept="image/*" required>
+                            <div class="form-check form-switch mb-3 p-3 bg-light rounded border">
+                                <input class="form-check-input" type="checkbox" id="walkInToggle">
+                                <label class="form-check-label fw-bold ms-2" for="walkInToggle">
+                                    I am a Walk-in Visitor (No Vehicle)
+                                </label>
                             </div>
+
+                            <div id="vehicleFieldsSection">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="fw-bold">Vehicle Model</label>
+                                        <input type="text" name="model" id="inputModel" class="form-control" placeholder="Toyota Vios (Red)" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="fw-bold">Plate Number</label>
+                                        <input type="text" name="plate" id="inputPlate" class="form-control" placeholder="ABC 123" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="text-success border-bottom pb-2 mt-4 mb-3">Security Uploads</h5>
+                            
                             <div class="mb-3">
-                                <label class="form-label">Photo of Face</label>
+                                <label class="form-label fw-bold">Photo of Face (Selfie)</label>
                                 <input type="file" name="photo_face" class="form-control" accept="image/*" required>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Photo of Plate</label>
-                                <input type="file" name="photo_plate" class="form-control" accept="image/*" required>
+                                <label class="form-label fw-bold">Driver's License / Valid ID</label>
+                                <input type="file" name="photo_license" class="form-control" accept="image/*" required>
+                                <small class="text-muted">Please upload a clear photo of your ID.</small>
                             </div>
 
-                            <div id="studentProofSection" class="p-3 bg-warning bg-opacity-10 border border-warning rounded mb-3" style="display: none;">
-                                <label class="form-label fw-bold text-dark">
-                                    <i class="fas fa-id-card me-2"></i>Proof of Attendance (Student ID)
-                                </label>
-                                <input type="file" name="photo_student_id" id="studentIdInput" class="form-control" accept="image/*">
-                                <small class="text-muted d-block mt-1">Required for entry to this specific event.</small>
+                            <div id="vehicleUploadsSection">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Photo of Vehicle</label>
+                                    <input type="file" name="photo_vehicle" id="inputPhotoVeh" class="form-control" accept="image/*" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Photo of Plate</label>
+                                    <input type="file" name="photo_plate" id="inputPhotoPlate" class="form-control" accept="image/*" required>
+                                </div>
                             </div>
 
-                            <button type="submit" class="btn btn-success w-100 py-2 fw-bold btn-submit">Submit Application</button>
+                            <button type="submit" class="btn btn-success w-100 py-3 mt-3 fw-bold fs-5 shadow-sm btn-submit">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Application
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -103,7 +124,50 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js?v=2"></script>
 
-   <script src="js/script.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const walkInToggle = document.getElementById('walkInToggle');
+            const vehicleFields = document.getElementById('vehicleFieldsSection');
+            const vehicleUploads = document.getElementById('vehicleUploadsSection');
+            
+            // Inputs to disable/unrequire
+            const inputModel = document.getElementById('inputModel');
+            const inputPlate = document.getElementById('inputPlate');
+            const inputPhotoVeh = document.getElementById('inputPhotoVeh');
+            const inputPhotoPlate = document.getElementById('inputPhotoPlate');
+
+            walkInToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Hide Sections
+                    vehicleFields.style.display = 'none';
+                    vehicleUploads.style.display = 'none';
+
+                    // Remove 'required' attribute so form can submit
+                    inputModel.removeAttribute('required');
+                    inputPlate.removeAttribute('required');
+                    inputPhotoVeh.removeAttribute('required');
+                    inputPhotoPlate.removeAttribute('required');
+                    
+                    // Clear values to prevent sending partial data
+                    inputModel.value = '';
+                    inputPlate.value = '';
+                    inputPhotoVeh.value = '';
+                    inputPhotoPlate.value = '';
+                } else {
+                    // Show Sections
+                    vehicleFields.style.display = 'block';
+                    vehicleUploads.style.display = 'block';
+
+                    // Add 'required' attribute back
+                    inputModel.setAttribute('required', '');
+                    inputPlate.setAttribute('required', '');
+                    inputPhotoVeh.setAttribute('required', '');
+                    inputPhotoPlate.setAttribute('required', '');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
