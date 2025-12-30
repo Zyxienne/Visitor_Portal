@@ -1,9 +1,5 @@
 // js/script.js
 
-// CONFIGURATION: CHANGE THIS TO YOUR PYTHONANYWHERE URL WHEN DEPLOYING
-// For local testing: "http://127.0.0.1:5000"
-// For live deployment: "https://yourname.pythonanywhere.com"
-// Make sure there is NO slash (/) at the very end
 const API_BASE_URL = "https://genoveva-unratable-shaniqua.ngrok-free.dev";
 
 const eventSelect = document.getElementById('eventSelect');
